@@ -23,7 +23,6 @@ const stickers = [
   { id: 13, src: '/image/papel3.png', top: '72%', left: '75%', start: 0.55, end: 0.7, rotate: -5, scale: 1.3 },
 
   // --- CAPA 4: EL FINAL (80% - 95%) --- 
-
   { id: 14, src: '/image/mariposa2.png', top: '78%', left: '40%', start: 0.6, end: 0.75, rotate: -20, scale: 0.8 },
   { id: 15, src: '/image/flor4.png', top: '82%', left: '5%', start: 0.65, end: 0.8, rotate: 20, scale: 1 },
   { id: 16, src: '/image/ramo4.png', top: '85%', left: '60%', start: 0.7, end: 0.85, rotate: -8, scale: 1.3 },
@@ -68,13 +67,13 @@ export const Garden = () => {
 
   return (
 
-    <div ref={containerRef} style={{ height: '100vh', position: 'relative' }}>
+    <div ref={containerRef} style={{ height: '150vh', position: 'relative' }}>
       <div style={{ 
         position: 'sticky', 
         top: 0, 
         height: '100vh', 
         width: '100%',
-        overflow: 'hidden'
+
       }}>
         {stickers.map(sticker => (
           <Sticker key={sticker.id} data={sticker} scrollYProgress={scrollYProgress} />
