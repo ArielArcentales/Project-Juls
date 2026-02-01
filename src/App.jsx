@@ -4,19 +4,25 @@ import { Garden } from './Garden';
 import { Surprise } from './Surprise';
 
 function App() {
-  // Configuración de la animación (Aparece suave y crece un poquito)
   const textVariant = {
-    hidden: { opacity: 0, y: 20, scale: 0.9 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      scale: 1,
-      transition: { duration: 1.2, ease: "easeOut" }
+      transition: { duration: 1.5, ease: "easeOut" }
     }
   };
 
+
+  const formalStyle = {
+    fontFamily: '"Playfair Display", serif',
+    color: '#fdfbf7',
+    textAlign: 'center',
+    lineHeight: '1.4'
+  };
+
   return (
-    <div style={{ backgroundColor: '#050505', minHeight: '100vh', overflowX: 'hidden', color: '#fff' }}> 
+    <div style={{ backgroundColor: '#050505', minHeight: '100vh', overflowX: 'hidden' }}> 
       
       {}
       <section style={{ 
@@ -26,7 +32,6 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center',
         padding: '20px',
-        textAlign: 'center',
         position: 'relative',
         zIndex: 10
       }}>
@@ -37,11 +42,11 @@ function App() {
           animate="visible"
           transition={{ delay: 0.5 }}
           style={{ 
-            fontSize: '3.5rem',
-            margin: '0 0 30px 0', 
-            fontFamily: 'Playfair Display, serif',
-            lineHeight: '1.1',
-            textShadow: '0 4px 10px rgba(255,255,255,0.1)'
+            ...formalStyle,
+            fontSize: '3rem', 
+            margin: '0 0 40px 0',
+            fontWeight: '400', 
+            letterSpacing: '2px'
           }} 
         >
           Me has preguntado
@@ -51,14 +56,13 @@ function App() {
           variants={textVariant}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 2.0 }} 
+          transition={{ delay: 2.0 }}
           style={{ 
-            fontSize: '1.8rem', 
-            opacity: 0.9, 
-            maxWidth: '80%', 
-            lineHeight: '1.4',
-            fontFamily: 'Lato, sans-serif',
-            color: '#e0e0e0'
+            ...formalStyle,
+            fontSize: '1.5rem', 
+            maxWidth: '80%',
+            fontWeight: '300',
+            fontStyle: 'italic'
           }}
         >
           ¿por qué nunca te regalo flores?
@@ -69,7 +73,7 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }}
           transition={{ delay: 3.5, duration: 2, repeat: Infinity }}
-          style={{ position: 'absolute', bottom: '50px', fontSize: '2rem', opacity: 0.5 }}
+          style={{ position: 'absolute', bottom: '50px', color: '#fdfbf7', fontSize: '1.5rem', opacity: 0.6 }}
         >
           ↓
         </motion.div>
@@ -81,41 +85,41 @@ function App() {
 
       {}
       <section style={{ 
-        minHeight: '60vh', 
+        minHeight: '80vh', 
         display: 'flex', 
         flexDirection: 'column', 
         justifyContent: 'center', 
         alignItems: 'center',
-        textAlign: 'center',
-        padding: '40px 20px',
+        padding: '40px',
         zIndex: 20,
-        position: 'relative',
-        backgroundColor: '#050505' 
+        position: 'relative'
       }}>
         
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }} 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.5 }}
         >
           <p style={{ 
-            fontSize: '1.5rem', 
-            marginBottom: '20px', 
-            fontFamily: 'Lato, sans-serif',
-            color: '#ccc' 
+            ...formalStyle,
+            fontSize: '1.8rem', 
+            marginBottom: '30px',
+            opacity: 0.9
           }}>
-            La verdad odio ver...
+            La verdad es que odio
           </p>
           
           <h2 style={{ 
-            fontSize: '2rem', 
-            fontFamily: 'Playfair Display, serif',
-            color: '#ffcccb',
-            lineHeight: '1.4',
-            maxWidth: '600px'
+            ...formalStyle,
+            fontSize: '2.2rem', 
+            maxWidth: '700px',
+            fontWeight: '400',
+            borderTop: '1px solid rgba(255,255,255,0.2)',
+            borderBottom: '1px solid rgba(255,255,255,0.2)',
+            padding: '20px 0'
           }}>
-            ...cómo algo tan hermoso se marchita en unos días.
+            que algo tan hermoso muera en unos días.
           </h2>
         </motion.div>
 
