@@ -31,7 +31,7 @@ function App() {
             lineHeight: '1.2'
           }} 
         >
-          Siempre me has preguntado...
+          Me has preguntado
         </motion.h1>
 
         <motion.p
@@ -46,7 +46,7 @@ function App() {
             fontFamily: 'Lato, sans-serif'
           }}
         >
-          ...por qué nunca te regalo flores que se marchitan.
+          ¿por qué nunca te regalo flores?
         </motion.p>
 
       </section>
