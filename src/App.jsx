@@ -1,10 +1,13 @@
-import { motion } from 'framer-motion'; // <--- Aquí la importamos
+/* eslint-disable no-unused-vars */
+import { motion } from 'framer-motion';
+import { Garden } from './Garden';
+import { Surprise } from './Surprise';
 
 function App() {
   return (
-    <div style={{ paddingBottom: '100px' }}> 
+    <div style={{ backgroundColor: '#050505', minHeight: '100vh' }}> 
       
-      {/* SECCIÓN 1: EL GANCHO */}
+      {/* --- SECCIÓN 1: INTRODUCCIÓN --- */}
       <section style={{ 
         height: '100vh', 
         display: 'flex', 
@@ -12,15 +15,16 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center',
         padding: '20px',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        zIndex: 10
       }}>
         
-        {/* Fíjate aquí: Usamos 'motion.h1', por eso deja de dar error */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.5 }}
-          style={{ fontSize: '2rem', margin: 0 }} 
+          style={{ fontSize: '2.5rem', margin: 0, fontFamily: 'Playfair Display, serif' }} 
         >
           Siempre me has preguntado...
         </motion.h1>
@@ -33,13 +37,14 @@ function App() {
             fontSize: '1.2rem', 
             marginTop: '20px', 
             opacity: 0.8, 
-            maxWidth: '300px'
+            maxWidth: '300px',
+            lineHeight: '1.6'
           }}
         >
-          ...por qué nunca te regalo flores.
+          ...por qué nunca te regalo flores que se marchitan.
         </motion.p>
 
-        {/* La flechita animada */}
+        {/* Indicador de scroll animado */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 10, 0] }} 
@@ -51,7 +56,9 @@ function App() {
           style={{
             position: 'absolute',
             bottom: '40px',
-            fontSize: '1.5rem'
+            fontSize: '1.5rem',
+            cursor: 'pointer',
+            opacity: 0.7
           }}
         >
           ↓
@@ -59,10 +66,11 @@ function App() {
 
       </section>
 
-      {/* Espacio extra para probar el scroll */}
-      <section style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p>Aquí comenzará la magia...</p>
-      </section>
+      {/* --- SECCIÓN 2: EL JARDÍN (SCROLL) --- */}
+      <Garden />
+
+      {/* --- SECCIÓN 3: LA SORPRESA FINAL --- */}
+      <Surprise />
 
     </div>
   )
