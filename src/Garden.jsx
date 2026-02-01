@@ -68,7 +68,7 @@ export const Garden = () => {
 
   return (
 
-    <div ref={containerRef} style={{ height: '200vh', position: 'relative' }}>
+    <div ref={containerRef} style={{ height: '100vh', position: 'relative' }}>
       <div style={{ 
         position: 'sticky', 
         top: 0, 
