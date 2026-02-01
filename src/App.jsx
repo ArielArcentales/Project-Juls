@@ -25,7 +25,7 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 0.5 }}
           style={{ 
-            fontSize: '2.2rem', // Ajustado para verse elegante en móvil
+            fontSize: '2.2rem', 
             margin: '0 0 20px 0', 
             fontFamily: 'Playfair Display, serif',
             lineHeight: '1.2'
@@ -41,7 +41,7 @@ function App() {
           style={{ 
             fontSize: '1.1rem', 
             opacity: 0.8, 
-            maxWidth: '80%', // Evita que el texto toque los bordes
+            maxWidth: '80%', 
             lineHeight: '1.6',
             fontFamily: 'Lato, sans-serif'
           }}
