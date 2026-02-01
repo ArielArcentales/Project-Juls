@@ -107,7 +107,7 @@ function App() {
             marginBottom: '30px',
             opacity: 0.9
           }}>
-            La verdad es que odio
+            La verdad odio
           </p>
           
           <h2 style={{ 
