@@ -22,9 +22,20 @@ export const Surprise = () => {
       {!isLoading && (
         <motion.button
           whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleClick}
-          style={{ padding: '15px 40px', fontSize: '1.2rem', backgroundColor: '#e63946', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontFamily: '"Playfair Display", serif', boxShadow: '0 10px 30px rgba(230, 57, 70, 0.3)' }}
+          style={{ 
+            padding: '15px 40px', 
+            fontSize: '1.2rem', 
+            backgroundColor: '#e63946', 
+            color: '#fff', 
+            border: 'none', 
+            borderRadius: '4px', 
+            cursor: 'pointer', 
+            fontFamily: '"Playfair Display", serif', 
+            boxShadow: '0 10px 30px rgba(230, 57, 70, 0.3)' 
+          }}
         >
-          Regar el Jardín Final ❤️
+          {}
+          Para Julietha
         </motion.button>
       )}
 
