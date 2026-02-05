@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { motion } from 'framer-motion';
 
-// --- CONFIGURACIÓN DE LOS ADORNOS ---
-// Cada foto tiene su propia lista de 'decorations'
 const storyData = [
   { 
     id: 1, 
@@ -72,7 +70,6 @@ const storyData = [
     img: '/image/foto8.jpg', 
     text: "Por eso, quería darte algo que dure tanto como lo que siento por ti...",
     decorations: [
-      { src: '/image/corazon2.png', css: { top: '-20px', left: '50%', transform: 'translateX(-50%)', width: '60px', zIndex: 1 } },
       { src: '/image/ramo4.png', css: { bottom: '-20px', right: '-20px', width: '100px', zIndex: -1, rotate: '-10deg' } },
       { src: '/image/ramo5.png', css: { bottom: '-20px', left: '-20px', width: '100px', zIndex: -1, rotate: '10deg' } }
     ]
@@ -89,30 +86,28 @@ const StoryItem = ({ data }) => {
       alignItems: 'center',
       position: 'relative',
       scrollSnapAlign: 'center',
-      overflow: 'hidden' // Para que los adornos no se salgan de la pantalla y rompan el scroll
+      overflow: 'hidden' 
     }}>
       
-      {/* CONTENEDOR DE LA FOTO + ADORNOS */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: false, amount: 0.5 }}
         transition={{ duration: 0.8 }}
         style={{
-          position: 'relative', // Importante para que los adornos se posicionen respecto a esto
+          position: 'relative', 
           width: '85%',
           maxWidth: '400px', 
           marginBottom: '40px'
         }}
       >
-        {/* Renderizamos los adornos de esta foto específica */}
         {data.decorations.map((deco, index) => (
           <motion.img
             key={index}
             src={deco.src}
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 + (index * 0.2), type: 'spring' }} // Aparecen con un "pop" después de la foto
+            transition={{ delay: 0.3 + (index * 0.2), type: 'spring' }} 
             style={{
               position: 'absolute',
               ...deco.css
@@ -120,12 +115,11 @@ const StoryItem = ({ data }) => {
           />
         ))}
 
-        {/* LA FOTO PRINCIPAL */}
         <div style={{
           borderRadius: '15px',
           overflow: 'hidden',
           boxShadow: '0 15px 40px rgba(0,0,0,0.6)',
-          border: '5px solid #fff', // Marco blanco tipo fotografía
+          border: '5px solid #fff', 
           backgroundColor: '#fff'
         }}>
           <img 
@@ -137,7 +131,6 @@ const StoryItem = ({ data }) => {
 
       </motion.div>
 
-      {/* TEXTO */}
       <motion.h3
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
