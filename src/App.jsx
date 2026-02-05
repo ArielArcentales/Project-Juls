@@ -3,78 +3,169 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MusicPlayer } from './MusicPlayer';
 import { Story } from './Story';
-import { Garden } from './Garden'; // <--- Importamos el Jardín
+import { Garden } from './Garden';
 
 function App() {
-  // Estado para controlar cuándo mostramos el jardín
   const [showGarden, setShowGarden] = useState(false);
 
-  const textVariant = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 1.2 } } };
-  const formalStyle = { fontFamily: '"Playfair Display", serif', color: '#fdfbf7', textAlign: 'center', lineHeight: '1.4' };
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1.5, ease: "easeOut" } }
+  };
+
+  const fontStyle = {
+    fontFamily: '"Playfair Display", serif',
+    color: '#ffffff',
+    textAlign: 'center',
+  };
 
   return (
-    <div style={{ backgroundColor: '#050505', minHeight: '100vh', overflowX: 'hidden' }}> 
+    <div style={{ 
+      backgroundColor: '#000000',
+      minHeight: '100vh', 
+      overflowX: 'hidden',
+      fontFamily: '"Playfair Display", serif'
+    }}> 
       
       <MusicPlayer />
 
       <AnimatePresence mode='wait'>
         
-        {/* ESCENA 1: LA HISTORIA (Se oculta al activar el jardín) */}
         {!showGarden && (
           <motion.div
             key="story-mode"
             exit={{ opacity: 0, transition: { duration: 1 } }}
           >
-            {/* INTRODUCCIÓN */}
-            <section style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '40px 20px', position: 'relative' }}>
-              <motion.h1 variants={textVariant} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ ...formalStyle, fontSize: '2.5rem', marginBottom: '20px', fontWeight: '400' }}>Me has preguntado...</motion.h1>
-              <motion.p variants={textVariant} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ delay: 0.5 }} style={{ ...formalStyle, fontSize: '1.3rem', maxWidth: '80%', fontStyle: 'italic', marginBottom: '60px', color: '#ccc' }}>...por qué nunca te regalo flores.</motion.p>
+            <section style={{ 
+              minHeight: '100vh', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              padding: '40px 20px' 
+            }}>
               
-              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1.5, duration: 1.5 }} style={{ maxWidth: '700px', margin: '0 auto' }}>
-                <p style={{ ...formalStyle, fontSize: '1.5rem', marginBottom: '20px', opacity: 0.9 }}>La verdad es que odio ver...</p>
-                <h2 style={{ ...formalStyle, fontSize: '1.8rem', fontWeight: '400', borderTop: '1px solid rgba(255,255,255,0.2)', borderBottom: '1px solid rgba(255,255,255,0.2)', padding: '20px 0' }}>...cómo algo tan hermoso se marchita en unos días.</h2>
+              <motion.h1 
+                variants={fadeInUp} 
+                initial="hidden" 
+                whileInView="visible" 
+                viewport={{ once: true }} 
+                style={{ ...fontStyle, fontSize: '2.2rem', marginBottom: '20px', fontWeight: '400' }}
+              >
+                Me has preguntado...
+              </motion.h1>
+
+              <motion.p 
+                variants={fadeInUp} 
+                initial="hidden" 
+                whileInView="visible" 
+                viewport={{ once: true }} 
+                style={{ ...fontStyle, fontSize: '1.2rem', fontStyle: 'italic', opacity: 0.8, marginBottom: '60px' }}
+              >
+                ...por qué nunca te regalo flores.
+              </motion.p>
+              
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                whileInView={{ opacity: 1 }} 
+                viewport={{ once: true }} 
+                transition={{ delay: 0.5, duration: 1.5 }} 
+                style={{ maxWidth: '600px', margin: '0 auto' }}
+              >
+                <p style={{ ...fontStyle, fontSize: '1.4rem', marginBottom: '30px', opacity: 0.9 }}>
+                  La verdad es que odio ver...
+                </p>
+                <h2 style={{ 
+                  ...fontStyle, 
+                  fontSize: '1.6rem', 
+                  borderTop: '1px solid rgba(255,255,255,0.3)', 
+                  borderBottom: '1px solid rgba(255,255,255,0.3)', 
+                  padding: '30px 0',
+                  lineHeight: '1.5'
+                }}>
+                  ...cómo algo tan hermoso<br/>se marchita en unos días.
+                </h2>
               </motion.div>
 
-              <motion.img src="/image/lobo1.png" alt="lobo" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 2.5, duration: 1 }} style={{ width: '160px', height: 'auto', marginTop: '50px', borderRadius: '12px', boxShadow: '0 10px 30px rgba(0,0,0,0.6)' }} />
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, 10, 0] }} transition={{ delay: 4, duration: 2, repeat: Infinity }} style={{ marginTop: '50px', color: '#fdfbf7', fontSize: '1.5rem', opacity: 0.6 }}>↓</motion.div>
+              <motion.img 
+                src="/image/lobo1.png" 
+                alt="lobo" 
+                initial={{ opacity: 0, scale: 0.9, filter: 'grayscale(100%)' }}
+                whileInView={{ opacity: 1, scale: 1, filter: 'grayscale(0%)' }} 
+                viewport={{ once: true }} 
+                transition={{ duration: 1.2 }} 
+                style={{ 
+                  width: '180px', 
+                  height: 'auto', 
+                  marginTop: '60px', 
+                  borderRadius: '4px',
+                  boxShadow: '0 20px 50px rgba(255,255,255,0.05)'
+                }} 
+              />
             </section>
 
-            {/* PUENTE */}
-            <section style={{ minHeight: '50vh', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
-              <h2 style={{ ...formalStyle, fontSize: '2rem', maxWidth: '600px', lineHeight: '1.6' }}>
-                Pero antes de mostrarte mi regalo,<br/>
-                <span style={{ color: '#ffcccb', fontStyle: 'italic' }}>déjame contarte una historia para que lo entiendas.</span>
-              </h2>
+            <section style={{ 
+              minHeight: '60vh', 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              padding: '40px' 
+            }}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1 }}
+                style={{
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  padding: '40px',
+                  maxWidth: '500px',
+                  backgroundColor: 'rgba(20,20,20,0.5)'
+                }}
+              >
+                <p style={{ 
+                  ...fontStyle, 
+                  fontSize: '1.5rem', 
+                  lineHeight: '1.6', 
+                  margin: 0 
+                }}>
+                  "Por eso preparé algo que va a durarte eternamente."
+                </p>
+              </motion.div>
             </section>
 
-            {/* HISTORIA SCRAPBOOK */}
             <Story />
 
-            {/* BOTÓN FINAL */}
-            <section style={{ minHeight: '40vh', display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '100px' }}>
+            <section style={{ 
+              minHeight: '50vh', 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              paddingBottom: '100px' 
+            }}>
                <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, backgroundColor: '#ffffff', color: '#000000' }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowGarden(true)} // <--- ESTO ACTIVA EL JARDÍN
+                  onClick={() => setShowGarden(true)}
                   style={{
-                    padding: '20px 50px',
-                    fontSize: '1.5rem',
-                    backgroundColor: '#e63946',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '50px',
+                    padding: '18px 40px',
+                    fontSize: '1.3rem',
+                    backgroundColor: 'transparent',
+                    color: '#ffffff',
+                    border: '1px solid #ffffff',
+                    borderRadius: '5px',
                     cursor: 'pointer',
                     fontFamily: '"Playfair Display", serif',
-                    boxShadow: '0 10px 30px rgba(230, 57, 70, 0.4)'
+                    letterSpacing: '2px',
+                    transition: 'all 0.3s ease'
                   }}
                 >
-                  Ver tu regalo 🎁
+                  VER TU REGALO
                 </motion.button>
             </section>
           </motion.div>
         )}
 
-        {/* ESCENA 2: EL JARDÍN (Se muestra solo al final) */}
         {showGarden && (
           <Garden onExit={() => setShowGarden(false)} />
         )}
