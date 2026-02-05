@@ -2,24 +2,20 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// Aceptamos la prop 'onComplete' para avisar a App.jsx
+const TARGET_DATE = '2026-02-06T00:00:00';
+
 export const Countdown = ({ onComplete }) => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  
-  // --- MODO PRUEBA ---
-  // Esto fija la meta en 10 segundos desde el momento en que se carga la página.
-  // Así verás la cuenta regresiva y el cambio automático sin esperar.
-  const [targetDate] = useState(() => new Date().getTime() + 10000); 
 
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date().getTime();
-      const distance = targetDate - now;
+      const target = new Date(TARGET_DATE).getTime();
+      const distance = target - now;
 
-      if (distance < 0) { 
+      if (distance < 0) {
         clearInterval(interval);
-        // ¡IMPORTANTE! Avisamos que el tiempo terminó
-        if (onComplete) onComplete(); 
+        if (onComplete) onComplete();
       } else {
         setTimeLeft({
           days: Math.floor(distance / (1000 * 60 * 60 * 24)),
@@ -29,10 +25,10 @@ export const Countdown = ({ onComplete }) => {
         });
       }
     }, 1000);
-    return () => clearInterval(interval);
-  }, [targetDate, onComplete]);
 
-  // Cambié el color a blanco (#ffffff) para que combine con tu diseño B&N
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
   const numStyle = { fontSize: '2rem', fontFamily: '"Playfair Display", serif', color: '#ffffff', minWidth: '40px', textAlign: 'center' };
   const lblStyle = { fontSize: '0.7rem', fontFamily: 'Lato, sans-serif', textTransform: 'uppercase', opacity: 0.7, color: '#ffffff' };
   const boxStyle = { display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 8px' };
