@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 const flowerMenu = [
@@ -17,25 +17,26 @@ const flowerMenu = [
 
 const createFlowerItem = (item) => {
   return {
-    uniqueId: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
+    uniqueId: Math.random().toString(36).substring(2, 9) + Date.now().toString(36),
     src: item.src,
     scale: item.scale,
-    top: 40 + (Math.random() * 10 - 5) + '%',
-    left: 45 + (Math.random() * 10 - 5) + '%',
-    rotation: (Math.random() * 20) - 10,
+    top: 40 + (Math.random() * 20 - 10) + '%',
+    left: 40 + (Math.random() * 20 - 10) + '%',
+    rotation: (Math.random() * 30) - 15,
   };
 };
 
 export const Garden = () => {
   const [plantedItems, setPlantedItems] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const addItem = (item) => {
     const newItem = createFlowerItem(item);
     setPlantedItems((prev) => [...prev, newItem]);
   };
 
-  const clearGarden = () => {
-    setPlantedItems([]);
+  const removeLastItem = () => {
+    setPlantedItems((prev) => prev.slice(0, -1));
   };
 
   return (
@@ -51,21 +52,19 @@ export const Garden = () => {
       touchAction: 'none'
     }}>
       
-      <div style={{ width: '100%', height: '82%', position: 'relative' }}>
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
         
         {plantedItems.length === 0 && (
           <div style={{ 
             position: 'absolute', 
-            top: '40%', 
+            top: '45%', 
             width: '100%', 
             textAlign: 'center', 
-            color: 'rgba(255,255,255,0.4)', 
+            color: 'rgba(255,255,255,0.3)', 
             fontFamily: '"Playfair Display", serif', 
-            pointerEvents: 'none',
-            padding: '0 20px'
+            pointerEvents: 'none'
           }}>
-            <p style={{ fontSize: '1.2rem', marginBottom: '10px' }}>Tu jardín está vacío...</p>
-            <p style={{ fontSize: '1rem', opacity: 0.7 }}>Toca los íconos abajo para empezar a plantar 🌱</p>
+            <p>Toca el paisaje (🌄) para empezar</p>
           </div>
         )}
 
@@ -92,73 +91,137 @@ export const Garden = () => {
         ))}
       </div>
 
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        height: '18%',
-        backgroundColor: 'rgba(30, 30, 30, 0.8)',
-        backdropFilter: 'blur(10px)',
-        borderTop: '1px solid rgba(255,255,255,0.1)',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 15px',
-        overflowX: 'auto',
-        gap: '15px',
-        zIndex: 60
-      }}>
-        
+      {!isMenuOpen && (
         <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={clearGarden}
+          onClick={() => setIsMenuOpen(true)}
           style={{
-            minWidth: '50px',
-            height: '50px',
+            position: 'absolute',
+            bottom: '30px',
+            right: '30px',
+            width: '60px',
+            height: '60px',
             borderRadius: '50%',
-            border: '1px solid #ff6b6b',
-            backgroundColor: 'transparent',
-            color: '#ff6b6b',
-            fontSize: '1.2rem',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            fontSize: '2rem',
             cursor: 'pointer',
-            marginRight: '10px',
+            zIndex: 60,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
           }}
         >
-          🗑️
+          🌄
         </motion.button>
+      )}
 
-        <div style={{ width: '1px', height: '40px', backgroundColor: 'rgba(255,255,255,0.2)', marginRight: '10px' }}></div>
-
-        {flowerMenu.map((flower, index) => (
+      <AnimatePresence>
+        {isMenuOpen && (
           <motion.div
-            key={index}
-            whileTap={{ scale: 0.8 }}
-            onClick={() => addItem(flower)}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 20 }}
             style={{
-              minWidth: '60px',
-              height: '60px',
-              backgroundColor: 'rgba(255,255,255,0.05)',
-              borderRadius: '12px',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: '280px',
+              maxWidth: '80vw',
+              height: '100%',
+              backgroundColor: 'rgba(20, 20, 20, 0.9)',
+              backdropFilter: 'blur(15px)',
+              borderLeft: '1px solid rgba(255,255,255,0.1)',
+              zIndex: 70,
+              padding: '20px',
               display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              cursor: 'pointer',
-              border: '1px solid rgba(255,255,255,0.1)',
+              flexDirection: 'column',
+              boxShadow: '-10px 0 30px rgba(0,0,0,0.5)'
             }}
           >
-            <img 
-              src={flower.src} 
-              alt="icono" 
-              style={{ width: '70%', height: '70%', objectFit: 'contain' }} 
-            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h3 style={{ color: '#fdfbf7', fontFamily: '"Playfair Display", serif', margin: 0 }}>Colección</h3>
+              
+              <button 
+                onClick={() => setIsMenuOpen(false)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#fff',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer'
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div style={{ 
+              flex: 1, 
+              overflowY: 'auto', 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr', 
+              gap: '15px',
+              paddingBottom: '20px'
+            }}>
+              {flowerMenu.map((flower, index) => (
+                <motion.div
+                  key={index}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => addItem(flower)}
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.05)',
+                    borderRadius: '12px',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    aspectRatio: '1/1'
+                  }}
+                >
+                  <img 
+                    src={flower.src} 
+                    alt="flor" 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={removeLastItem}
+              disabled={plantedItems.length === 0}
+              style={{
+                width: '100%',
+                padding: '15px',
+                marginTop: '10px',
+                borderRadius: '12px',
+                border: '1px solid rgba(255, 77, 77, 0.3)',
+                backgroundColor: 'rgba(255, 77, 77, 0.1)',
+                color: '#ff6b6b',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                opacity: plantedItems.length === 0 ? 0.5 : 1
+              }}
+            >
+              <span>↩️</span> Deshacer último
+            </motion.button>
+
           </motion.div>
-        ))}
-        
-        <div style={{ minWidth: '20px' }}></div>
-      </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
