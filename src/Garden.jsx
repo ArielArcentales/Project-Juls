@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Math from 'mathjs';
-
 
 const flowerMenu = [
   { src: '/jardin/sol.png', scale: 1.4, id: 'sol' },
@@ -17,19 +15,23 @@ const flowerMenu = [
   { src: '/jardin/florr1.png', scale: 1, id: 'florr' },
 ];
 
+const createFlowerItem = (item) => {
+  return {
+    uniqueId: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
+    src: item.src,
+    scale: item.scale,
+    top: 40 + (Math.random() * 10 - 5) + '%',
+    left: 45 + (Math.random() * 10 - 5) + '%',
+    rotation: (Math.random() * 20) - 10,
+  };
+};
+
 export const Garden = () => {
   const [plantedItems, setPlantedItems] = useState([]);
 
   const addItem = (item) => {
-    const newItem = {
-      uniqueId: Math.random().toString(36),
-      src: item.src,
-      scale: item.scale,
-      top: 40 + (Math.random() * 10 - 5) + '%', 
-      left: 45 + (Math.random() * 10 - 5) + '%',
-      rotation: (Math.random() * 20) - 10, 
-    };
-    setPlantedItems([...plantedItems, newItem]);
+    const newItem = createFlowerItem(item);
+    setPlantedItems((prev) => [...prev, newItem]);
   };
 
   const clearGarden = () => {
