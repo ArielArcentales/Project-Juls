@@ -27,22 +27,14 @@ const createFlowerItem = (item) => {
 };
 
 const RainEffect = () => {
-  const [drops, setDrops] = useState([]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const generatedDrops = Array.from({ length: 40 }).map((_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        duration: 0.8 + Math.random() * 0.5,
-        delay: Math.random() * 2
-      }));
-      setDrops(generatedDrops);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (drops.length === 0) return null;
+  const [drops] = useState(() => 
+    Array.from({ length: 40 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      duration: 0.8 + Math.random() * 0.5,
+      delay: Math.random() * 2
+    }))
+  );
 
   return (
     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 40, overflow: 'hidden' }}>
@@ -127,14 +119,16 @@ export const Garden = () => {
         {plantedItems.length === 0 && (
           <div style={{ 
             position: 'absolute', 
-            top: '45%', 
-            width: '100%', 
+            top: '50%', 
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '80%', 
             textAlign: 'center', 
             color: 'rgba(255,255,255,0.3)', 
             fontFamily: '"Playfair Display", serif', 
             pointerEvents: 'none'
           }}>
-            <p>Toca el paisaje (🌄) para empezar</p>
+            <p>Usa los controles de arriba para crear ⬆️</p>
           </div>
         )}
 
@@ -161,13 +155,69 @@ export const Garden = () => {
         ))}
       </div>
 
+      {!isMenuOpen && (
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsMenuOpen(true)}
+          style={{
+            position: 'absolute',
+            top: '20px',
+            left: '20px',
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            backgroundColor: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            fontSize: '1.5rem',
+            cursor: 'pointer',
+            zIndex: 60,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+          }}
+        >
+          🌄
+        </motion.button>
+      )}
+
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={removeLastItem}
+        disabled={plantedItems.length === 0}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          left: '85px',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(255, 77, 77, 0.2)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 77, 77, 0.4)',
+          fontSize: '1.5rem',
+          cursor: 'pointer',
+          zIndex: 60,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+          opacity: plantedItems.length === 0 ? 0.3 : 1
+        }}
+      >
+        ↩️
+      </motion.button>
+
       <motion.button
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsRaining(true)}
         style={{
           position: 'absolute',
-          top: '30px',
-          right: '30px',
+          top: '20px',
+          right: '20px',
           width: '50px',
           height: '50px',
           borderRadius: '50%',
@@ -186,84 +236,28 @@ export const Garden = () => {
         🌧️
       </motion.button>
 
-      <motion.button
-        whileTap={{ scale: 0.9 }}
-        onClick={removeLastItem}
-        disabled={plantedItems.length === 0}
-        style={{
-          position: 'absolute',
-          bottom: '30px',
-          left: '30px',
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          backgroundColor: 'rgba(255, 77, 77, 0.2)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 77, 77, 0.4)',
-          fontSize: '1.8rem',
-          cursor: 'pointer',
-          zIndex: 60,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
-          opacity: plantedItems.length === 0 ? 0.3 : 1
-        }}
-      >
-        ↩️
-      </motion.button>
-
-      {!isMenuOpen && (
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsMenuOpen(true)}
-          style={{
-            position: 'absolute',
-            bottom: '30px',
-            right: '30px',
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255,255,255,0.3)',
-            fontSize: '2rem',
-            cursor: 'pointer',
-            zIndex: 60,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
-          }}
-        >
-          🌄
-        </motion.button>
-      )}
-
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ x: '100%' }}
+            initial={{ x: '-100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: '-100%' }}
             transition={{ type: 'spring', damping: 20 }}
             style={{
               position: 'absolute',
               top: 0,
-              right: 0,
+              left: 0,
               width: '280px',
               maxWidth: '80vw',
               height: '100%',
-              backgroundColor: 'rgba(20, 20, 20, 0.9)',
+              backgroundColor: 'rgba(20, 20, 20, 0.95)',
               backdropFilter: 'blur(15px)',
-              borderLeft: '1px solid rgba(255,255,255,0.1)',
+              borderRight: '1px solid rgba(255,255,255,0.1)',
               zIndex: 70,
               padding: '20px',
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: '-10px 0 30px rgba(0,0,0,0.5)'
+              boxShadow: '10px 0 30px rgba(0,0,0,0.5)'
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
