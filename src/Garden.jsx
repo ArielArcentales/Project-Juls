@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const flowerMenu = [
   { src: '/jardin/sol.png', scale: 1.4, id: 'sol' },
@@ -26,9 +26,66 @@ const createFlowerItem = (item) => {
   };
 };
 
+const RainEffect = () => {
+  const [drops, setDrops] = useState([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const generatedDrops = Array.from({ length: 40 }).map((_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        duration: 0.8 + Math.random() * 0.5,
+        delay: Math.random() * 2
+      }));
+      setDrops(generatedDrops);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (drops.length === 0) return null;
+
+  return (
+    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 40, overflow: 'hidden' }}>
+      {drops.map((drop) => (
+        <motion.div
+          key={drop.id}
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: '110vh', opacity: 1 }}
+          transition={{ 
+            duration: drop.duration, 
+            repeat: Infinity, 
+            delay: drop.delay, 
+            ease: 'linear' 
+          }}
+          style={{
+            position: 'absolute',
+            left: `${drop.left}%`,
+            width: '2px',
+            height: '15px',
+            background: 'rgba(173, 216, 230, 0.6)',
+            boxShadow: '0 0 5px rgba(173, 216, 230, 0.8)',
+            borderRadius: '5px'
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export const Garden = () => {
   const [plantedItems, setPlantedItems] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isRaining, setIsRaining] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isRaining) {
+      timer = setTimeout(() => {
+        setIsRaining(false);
+      }, 7000);
+    }
+    return () => clearTimeout(timer);
+  }, [isRaining]);
 
   const addItem = (item) => {
     const newItem = createFlowerItem(item);
@@ -52,6 +109,19 @@ export const Garden = () => {
       touchAction: 'none'
     }}>
       
+      <AnimatePresence>
+        {isRaining && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <RainEffect />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
         
         {plantedItems.length === 0 && (
@@ -90,6 +160,58 @@ export const Garden = () => {
           />
         ))}
       </div>
+
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={() => setIsRaining(true)}
+        style={{
+          position: 'absolute',
+          top: '30px',
+          right: '30px',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          backgroundColor: isRaining ? 'rgba(100, 200, 255, 0.3)' : 'rgba(255,255,255,0.1)',
+          backdropFilter: 'blur(10px)',
+          border: isRaining ? '1px solid #87CEEB' : '1px solid rgba(255,255,255,0.3)',
+          fontSize: '1.5rem',
+          cursor: 'pointer',
+          zIndex: 60,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+        }}
+      >
+        🌧️
+      </motion.button>
+
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={removeLastItem}
+        disabled={plantedItems.length === 0}
+        style={{
+          position: 'absolute',
+          bottom: '30px',
+          left: '30px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(255, 77, 77, 0.2)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 77, 77, 0.4)',
+          fontSize: '1.8rem',
+          cursor: 'pointer',
+          zIndex: 60,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+          opacity: plantedItems.length === 0 ? 0.3 : 1
+        }}
+      >
+        ↩️
+      </motion.button>
 
       {!isMenuOpen && (
         <motion.button
@@ -194,30 +316,6 @@ export const Garden = () => {
                 </motion.div>
               ))}
             </div>
-
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={removeLastItem}
-              disabled={plantedItems.length === 0}
-              style={{
-                width: '100%',
-                padding: '15px',
-                marginTop: '10px',
-                borderRadius: '12px',
-                border: '1px solid rgba(255, 77, 77, 0.3)',
-                backgroundColor: 'rgba(255, 77, 77, 0.1)',
-                color: '#ff6b6b',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '10px',
-                opacity: plantedItems.length === 0 ? 0.5 : 1
-              }}
-            >
-              <span>↩️</span> Deshacer último
-            </motion.button>
 
           </motion.div>
         )}
