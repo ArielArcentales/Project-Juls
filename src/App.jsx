@@ -52,7 +52,7 @@ function App() {
                 viewport={{ once: true }} 
                 style={{ ...fontStyle, fontSize: '2.2rem', marginBottom: '20px', fontWeight: '400' }}
               >
-                Me has preguntado...
+                Me has preguntado
               </motion.h1>
 
               <motion.p 
@@ -62,7 +62,7 @@ function App() {
                 viewport={{ once: true }} 
                 style={{ ...fontStyle, fontSize: '1.2rem', fontStyle: 'italic', opacity: 0.8, marginBottom: '60px' }}
               >
-                ...por qué nunca te regalo flores.
+                por qué nunca te regalo flores.
               </motion.p>
               
               <motion.div 
@@ -73,7 +73,7 @@ function App() {
                 style={{ maxWidth: '600px', margin: '0 auto' }}
               >
                 <p style={{ ...fontStyle, fontSize: '1.4rem', marginBottom: '30px', opacity: 0.9 }}>
-                  La verdad es que odio ver...
+                  La verdad es que odio ver
                 </p>
                 <h2 style={{ 
                   ...fontStyle, 
@@ -83,7 +83,7 @@ function App() {
                   padding: '30px 0',
                   lineHeight: '1.5'
                 }}>
-                  ...cómo algo tan hermoso<br/>se marchita en unos días.
+                  cómo algo tan hermoso<br/>se marchita en unos días.
                 </h2>
               </motion.div>
 
@@ -105,7 +105,7 @@ function App() {
             </section>
 
             <section style={{ 
-              minHeight: '60vh', 
+              minHeight: '40vh', 
               display: 'flex', 
               justifyContent: 'center', 
               alignItems: 'center', 
@@ -129,9 +129,33 @@ function App() {
                   lineHeight: '1.6', 
                   margin: 0 
                 }}>
-                  "Por eso preparé algo que va a durarte eternamente."
+                  Por eso preparé algo que va a durarte eternamente siempre
                 </p>
               </motion.div>
+            </section>
+
+            <section style={{ 
+              minHeight: '30vh', 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              padding: '20px' 
+            }}>
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5 }}
+                style={{
+                  ...fontStyle,
+                  fontSize: '1.8rem',
+                  fontWeight: '400',
+                  maxWidth: '600px',
+                  lineHeight: '1.6'
+                }}
+              >
+                Pero antes de entregártelo, permíteme recorrer brevemente nuestra historia
+              </motion.h3>
             </section>
 
             <Story />
@@ -160,7 +184,7 @@ function App() {
                     transition: 'all 0.3s ease'
                   }}
                 >
-                  VER TU REGALO
+                  MIRA TU REGALO
                 </motion.button>
             </section>
           </motion.div>
