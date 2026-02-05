@@ -76,7 +76,7 @@ function App() {
 
         {/* ESCENA 2: EL JARDÍN (Se muestra solo al final) */}
         {showGarden && (
-          <Garden />
+          <Garden onExit={() => setShowGarden(false)} />
         )}
 
       </AnimatePresence>

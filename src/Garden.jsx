@@ -64,7 +64,7 @@ const RainEffect = () => {
   );
 };
 
-export const Garden = () => {
+export const Garden = ({ onExit }) => {
   const [plantedItems, setPlantedItems] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isRaining, setIsRaining] = useState(false);
@@ -217,7 +217,7 @@ export const Garden = () => {
         style={{
           position: 'absolute',
           top: '20px',
-          right: '20px',
+          right: '85px', 
           width: '50px',
           height: '50px',
           borderRadius: '50%',
@@ -234,6 +234,31 @@ export const Garden = () => {
         }}
       >
         🌧️
+      </motion.button>
+
+      <motion.button
+        whileTap={{ scale: 0.9 }}
+        onClick={onExit}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          fontSize: '1.5rem',
+          cursor: 'pointer',
+          zIndex: 60,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.5)'
+        }}
+      >
+        🏠
       </motion.button>
 
       <AnimatePresence>
